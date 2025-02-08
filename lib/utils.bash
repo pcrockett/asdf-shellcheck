@@ -55,7 +55,8 @@ download() {
 
 	# Shellcheck supports Darwin/ARM only starting from v0.10.0.
 	# If the requested version is lower than v0.10.0, then fall back to the x86_64 version.
-	local -r version_parts=("${version//./ }")
+	# shellcheck disable=SC2206  # intentionally splitting version string
+	local -r version_parts=(${version//./ })
 	if [ "${version_parts[0]}" -eq 0 ] && [ "${version_parts[1]}" -lt 10 ]; then
 		test "$platform" == "darwin" && arch="x86_64"
 	fi
