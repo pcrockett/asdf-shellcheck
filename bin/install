@@ -13,13 +13,14 @@ test -n "$ASDF_INSTALL_PATH" || {
 }
 
 _get_arch() {
-  local arch; arch=$(uname -m)
-  case $arch in
-    armv*) arch="armv6hf";;
-    aarch64 | arm64) arch="aarch64";;
-    x86_64) arch="x86_64";;
-  esac
-  echo "$arch"
+	local arch
+	arch=$(uname -m)
+	case $arch in
+	armv*) arch="armv6hf" ;;
+	aarch64 | arm64) arch="aarch64" ;;
+	x86_64) arch="x86_64" ;;
+	esac
+	echo "$arch"
 }
 
 _get_platform() {
@@ -42,10 +43,11 @@ install() {
 	local -r bin_path="${bin_install_path}/shellcheck"
 
 	local -r platform="$(_get_platform)"
-	local arch; arch="$(_get_arch)"
+	local arch
+	arch="$(_get_arch)"
 	# Shellcheck supports Darwin/ARM only starting from v0.10.0.
 	# If the requested version is lower than v0.10.0, then fall back to the x86_64 version.
-	local -r version_parts=(${version//./ })
+	local -r version_parts=("${version//./ }")
 	if [ "${version_parts[0]}" -eq 0 ] && [ "${version_parts[1]}" -lt 10 ]; then
 		test "$platform" == "darwin" && arch="x86_64"
 	fi
