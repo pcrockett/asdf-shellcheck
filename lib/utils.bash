@@ -13,13 +13,14 @@ test -n "$ASDF_INSTALL_PATH" || {
 }
 
 _get_arch() {
-  local arch; arch=$(uname -m)
-  case $arch in
-    armv*) arch="armv6hf";;
-    aarch64 | arm64) arch="aarch64";;
-    x86_64) arch="x86_64";;
-  esac
-  echo "$arch"
+	local arch
+	arch=$(uname -m)
+	case $arch in
+	armv*) arch="armv6hf" ;;
+	aarch64 | arm64) arch="aarch64" ;;
+	x86_64) arch="x86_64" ;;
+	esac
+	echo "$arch"
 }
 
 _get_platform() {
@@ -58,14 +59,14 @@ download() {
 	if [ "${version_parts[0]}" -eq 0 ] && [ "${version_parts[1]}" -lt 10 ]; then
 		test "$platform" == "darwin" && arch="x86_64"
 	fi
-	
+
 	bin_path="${ASDF_DOWNLOAD_PATH}/shellcheck"
 	download_url="$(_get_download_url "${version}" "${platform}" "${arch}")"
 
 	echo "Downloading shellcheck from ${download_url} to ${ASDF_DOWNLOAD_PATH}"
 	# curl to tar, without files on disk
-	curl -Ls "${download_url}" \
-		| tar -xJv --strip-components=1 -C \
+	curl -Ls "${download_url}" |
+		tar -xJv --strip-components=1 -C \
 			"${ASDF_DOWNLOAD_PATH}" "shellcheck-v${version}/shellcheck"
 	chmod +x "${bin_path}"
 }
