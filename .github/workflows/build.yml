@@ -16,7 +16,7 @@ jobs:
           - macos-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: asdf_plugin_test
-        uses: asdf-vm/actions/plugin-test@v3
-        with:
-          command: shellcheck --version
+      - uses: actions/checkout@v4
+      - uses: asdf-vm/actions/setup@v3
+      - name: install and test plugin
+        run: ./scripts/test.bash
