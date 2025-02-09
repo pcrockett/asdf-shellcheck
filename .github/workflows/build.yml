@@ -19,10 +19,4 @@ jobs:
       - uses: actions/checkout@v4
       - uses: asdf-vm/actions/setup@v3
       - name: install and test plugin
-        run: |
-          asdf plugin add shellcheck ./.git && \
-          asdf install shellcheck latest && \
-          asdf local shellcheck latest && \
-          shellcheck_path="$(asdf which shellcheck)" && \
-          echo "${shellcheck_path}" | grep --fixed-strings "asdf/installs/shellcheck" && \
-          "${shellcheck_path}" --version
+        run: ./scripts/test.bash
